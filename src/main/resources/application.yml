@@ -1,0 +1,26 @@
+
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML5
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://106.12.35.31/oa?characterEncodeing=utf-8&useSSL=false&serverTimezone=GMT%2b8
+  jpa:
+    show-sql: true
+server:
+  port: 80
+
+#pagehelper分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  dialect: com.github.pagehelper.dialect.helper.MySqlDialect
+

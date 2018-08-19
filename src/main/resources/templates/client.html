@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/common_head::head(办公系统-房源)">
+
+</head>
+<body>
+    <div th:replace="common/public::commonNav"></div>
+    <ul th:replace="common/public::commonUl"></ul>
+    <!--<div class="container-fluid">-->
+        <!--<div class="row">-->
+            <!--<div class="col-sm-3 col-md-2 sidebar">-->
+                <!--<ul th:replace="public::commonUl"></ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="container-fluid">
+        <div class="row">
+            <div th:include="common/onload_js :: onloadJs"></div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <!--<h1 class="page-header">Dashboard</h1>
+
+                <div class="row placeholders">
+                  <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                  </div>
+                </div>-->
+                <!--导航栏下边-->
+
+                <div class="row sub-header">
+                    <h3 class="col-lg-5">客户信息</h3>
+
+                    <!-- Large modal -->
+                    <div class="col-lg-4 btn-div">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="添加">添加客户</button>
+                        <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                            <div class="modal-dialog  modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="exampleModalLabel">添加客源</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="form-group col-md-4">
+                                                    <label for="client_name" class="control-label">客户姓名</label>
+                                                    <input type="text" class="form-control" id="client_name">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="client_phone" class="control-label">客户联系方式</label>
+                                                    <input class="form-control" id="client_phone" placeholder="客户联系方式">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="client_gender" class="control-label">客户性别</label>
+                                                    <input class="form-control" id="client_gender" placeholder="">
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label for="message-text" class="control-label">其他信息、备注</label>
+                                                    <input class="form-control" id="message-text" placeholder="其他备注信息 如：朝向要求、心理价位、面积要求等">
+                                                </div>
+
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-primary">添加</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 input-div">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+			        <button class="btn btn-default" type="button">搜索</button>
+			      </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>客户姓名</th>
+                            <th>客户电话</th>
+                            <th>性别</th>
+                            <th>其他备注信息</th>
+                            <th>经纪人</th>
+
+                        </tr>
+                        </thead>
+                        <tbody id="app">
+                        <tr onclick=inDetail(this) data-toggle="modal" data-target=".bs-example-modal-lg"  v-for="item in items" id="house_td">
+                            <td>{{ item.houseId }}</td>
+                            <td>{{ item.houseEstate }}</td>
+                            <td>{{ item.houseNumber }}</td>
+                            <td>{{ item.houseSize }}</td>
+                            <td>{{ item.totalPrice }}</td>
+                            <td>{{ item.broker }}</td>
+                            <td>{{ item.landlordPhone }}</td>
+                        </tr>
+                        <tr>
+                            <td>1,002</td>
+                            <td>amet</td>
+                            <td>consectetur</td>
+                            <td>adipiscing</td>
+                            <td>elit</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,003</td>
+                            <td>Integer</td>
+                            <td>nec</td>
+                            <td>odio</td>
+                            <td>Praesent</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,003</td>
+                            <td>libero</td>
+                            <td>Sed</td>
+                            <td>cursus</td>
+                            <td>ante</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,004</td>
+                            <td>dapibus</td>
+                            <td>diam</td>
+                            <td>Sed</td>
+                            <td>nisi</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,005</td>
+                            <td>Nulla</td>
+                            <td>quis</td>
+                            <td>sem</td>
+                            <td>at</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,006</td>
+                            <td>nibh</td>
+                            <td>elementum</td>
+                            <td>imperdiet</td>
+                            <td>Duis</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,007</td>
+                            <td>sagittis</td>
+                            <td>ipsum</td>
+                            <td>Praesent</td>
+                            <td>mauris</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,008</td>
+                            <td>Fusce</td>
+                            <td>nec</td>
+                            <td>tellus</td>
+                            <td>sed</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,009</td>
+                            <td>augue</td>
+                            <td>semper</td>
+                            <td>porta</td>
+                            <td>Mauris</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,010</td>
+                            <td>massa</td>
+                            <td>Vestibulum</td>
+                            <td>lacinia</td>
+                            <td>arcu</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,011</td>
+                            <td>eget</td>
+                            <td>nulla</td>
+                            <td>Class</td>
+                            <td>aptent</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,012</td>
+                            <td>taciti</td>
+                            <td>sociosqu</td>
+                            <td>ad</td>
+                            <td>litora</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,013</td>
+                            <td>torquent</td>
+                            <td>per</td>
+                            <td>conubia</td>
+                            <td>nostra</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,014</td>
+                            <td>per</td>
+                            <td>inceptos</td>
+                            <td>himenaeos</td>
+                            <td>Curabitur</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        <tr>
+                            <td>1,015</td>
+                            <td>sodales</td>
+                            <td>ligula</td>
+                            <td>in</td>
+                            <td>libero</td>
+                            <td>公</td>
+                            <td>13000000000</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--查看详情模态框-->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">房源详情</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="recipient-name" class="control-label">小区</label>
+                                <input type="text" class="form-control" id="recipient_detailed_name" value="保利东湾">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="house_number" class="control-label">房号</label>
+                                <input class="form-control" id="house_detailed_number" placeholder="填写具体房号如：1-2-201" value="3-2-502">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="house_size" class="control-label">面积 ㎡</label>
+                                <input class="form-control pingfangmi_input" id="house_detailed_size" placeholder="单位：平方米" value="500">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="message-text" class="control-label">总价  单位：万元</label>
+                                <input class="form-control" id="house_detailed_price" placeholder="填写总价 单位：万元" value="500">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="landlord_name" class="control-label">房东姓名</label>
+                                <input class="form-control" id="landlord_detailed_name" placeholder="房东姓名" value="张">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="landlord_phone" class="control-label">房东联系方式</label>
+                                <input class="form-control" id="landlord_detailed_phone" placeholder="房东联系方式" value="13000000000">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="message-text" class="control-label">其他信息、备注</label>
+                                <input class="form-control" id="message_detailed_text" placeholder="其他备注信息 如：朝向等" value="房子朝南的，有钥匙">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="common/public :: commonFooter"></div>
+</body>
+</html>

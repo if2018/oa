@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <nav th:fragment="commonNav" class="navbar navbar-inverse navbar-static-top navbar-default ">
+    <div class="container" >
+        <div class="navbar-header" >
+            <button type="button" class="navbar-toggle pull-left collapsed" data-toggle="offcanvas">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" id="current"  href="#">欢迎你 {{ items.name }}</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse sidebar-offcanvas">
+            <ul class="nav navbar-nav nav-list">
+                <li class=""><a href="/index">房源</a></li>
+                <li  class=""><a href="/client">客源</a></li>
+                <li  class=""><a href="#">一手房</a></li>
+
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        个人中心<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu nav">
+                        <li class="active nav-list-li" ><a href="#">修改密码</a></li>
+                        <li  class="nav-list-li"><a href="#">修改号码</a></li>
+                        <li  class="nav-list-li"><a href="#">个人房源</a></li>
+                        <li class="nav-list-li"><a href="/logout">注销登录</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+    <div class="col-sm-3 col-md-2 sidebar" th:fragment="commonUl">
+        <ul  class="nav nav-sidebar nav-clone">
+            <li class=""><a href="/index">房源</a></li>
+            <li  class=""><a href="/client">客源</a></li>
+            <li  class=""><a href="#">一手房</a></li>
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    个人中心<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu nav">
+                    <li class="active nav-list-li" ><a href="#">修改密码</a></li>
+                    <li  class="nav-list-li"><a href="#">修改号码</a></li>
+                    <li  class="nav-list-li"><a href="#">个人房源</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+
+<footer th:fragment="commonFooter">
+    <script>
+    // //导航栏特效调用
+    // function navClion(){
+    //     var html=$('.nav-list').html()
+    //     $('.nav-clone').html(html);
+    // }
+    //
+    // navClion();
+    // $(".nav-list li").on('click',function (e) {
+    //
+    //     e.preventDefault()
+    //     $(this).tab('show')
+    //     navClion();
+    //     return
+    // })
+    $(function () {
+        //alert("111")
+        $.ajax({
+            url:"/operating/currentUser",
+            success:function (data) {
+                //alert("请求成功")
+                new Vue({
+                    el: '#current',
+                    data: {
+                        items:data
+                    }
+                })
+                addCookie("userName",data.name,1)
+            },
+            error:function () {
+                alert("请求失败")
+            }
+        })
+    });
+    //添加cookie
+    function addCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+
+
+    </script>
+</footer>
+</html>
