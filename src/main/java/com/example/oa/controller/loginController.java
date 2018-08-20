@@ -11,7 +11,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity//注解开启springSecurity的功能
@@ -33,6 +35,11 @@ public class loginController extends WebSecurityConfigurerAdapter {
     public UserDetailsService customUserService() {
         return new MyUserDetailServiceImpl();
     }
+    // BrowerSecurityConfig加密方式
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,6 +49,7 @@ public class loginController extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()//定义哪些url需要保护，哪些url不需要保护
         .antMatchers("/css/**","/js/**","/img/**","/bootstrap-4.0.0/**","/common/**").permitAll()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
         .formLogin()

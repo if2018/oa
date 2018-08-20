@@ -42,4 +42,9 @@ public class JumpController {
 
     }
 
+    @RequestMapping("/admin/hello")
+    public String HelloAdmin(){
+        return "admin/hello_admin";
+    }
+
 }

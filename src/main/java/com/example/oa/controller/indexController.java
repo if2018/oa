@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -156,6 +157,7 @@ public class indexController {
     @RequestMapping(value = "/currentUser")
     public User CurrentUser(){
         auth= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(auth.getAuthorities());
         //System.out.println(auth.getUserId());
         return auth;
     }
